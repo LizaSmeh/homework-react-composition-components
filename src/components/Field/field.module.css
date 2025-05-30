@@ -1,0 +1,15 @@
+.container {
+    background: white;
+    display: flex;
+    max-width: 300px;
+    flex-wrap: wrap;
+}
+.btnField {
+    width: 100px;
+    height: 100px;
+    border: 2px solid black;
+    background: pink;
+    color: black;
+    font-size: 15px;
+    
+}
