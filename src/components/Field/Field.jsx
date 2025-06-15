@@ -1,26 +1,11 @@
 import PropTypes from "prop-types";
 import { FieldLayout } from "./FieldLayout";
+import { store } from "../../redux/store";
 
-export const Field = ({
-  field,
-  setField,
-  currentPlayer,
-  setCurrentPlayer,
-  calculateWinner,
-  isGameEnded,
-  isDraw,
-}) => {
-  const onClickField = (i) => {
-    let newField = [...field];
-    if (isGameEnded || newField[i] || isDraw) {
-      return;
-    }
-    newField[i] = currentPlayer;
-    setField(newField);
-    setCurrentPlayer(currentPlayer === "X" ? "0" : "X");
-    calculateWinner(newField);
-  };
-  return <FieldLayout field={field} onClickField={onClickField} />;
+export const Field = ({ onClickField }) => {
+  const state = store.getState();
+
+  return <FieldLayout field={state.field} onClickField={onClickField} />;
 };
 
 Field.propTypes = {
@@ -30,5 +15,5 @@ Field.propTypes = {
   setCurrentPlayer: PropTypes.func,
   calculateWinner: PropTypes.func,
   isGameEnded: PropTypes.bool,
-  isDraw: PropTypes.bool
+  isDraw: PropTypes.bool,
 };

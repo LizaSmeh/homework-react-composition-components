@@ -2,17 +2,9 @@ import PropTypes from "prop-types";
 import styles from "./game.module.css";
 
 export const GameLayout = ({
-  setField,
-  setIsDraw,
-  setIsGameEnded,
-  setCurrentPlayer,
+  onClear
 }) => {
-  const onClear = () => {
-    setCurrentPlayer("X");
-    setIsGameEnded(false);
-    setIsDraw(false);
-    setField(["", "", "", "", "", "", "", "", ""]);
-  };
+  
 
   return (
     <>

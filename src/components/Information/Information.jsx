@@ -1,18 +1,20 @@
 import PropTypes from "prop-types";
 import { InformationLayout } from "./InformationLayout";
+import { store } from "../../redux/store";
 
-export const Information = ({ currentPlayer, isDraw, isGameEnded }) => {
+export const Information = () => {
+  const state = store.getState();
   return (
     <InformationLayout
-      currentPlayer={currentPlayer}
-      isDraw={isDraw}
-      isGameEnded={isGameEnded}
+      currentPlayer={state.currentPlayer}
+      isDraw={state.isDraw}
+      isGameEnded={state.isGameEnded}
     />
   );
 };
 
 Information.propTypes = {
-  currentPlayer: PropTypes.string, 
+  currentPlayer: PropTypes.string,
   isGameEnded: PropTypes.bool,
-  isDraw: PropTypes.bool
-}
+  isDraw: PropTypes.bool,
+};
