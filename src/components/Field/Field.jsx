@@ -1,11 +1,12 @@
 import PropTypes from "prop-types";
 import { FieldLayout } from "./FieldLayout";
-import { store } from "../../redux/store";
+import {useSelector} from 'react-redux'
+import { selectField  } from "../../selectors"
 
 export const Field = ({ onClickField }) => {
-  const state = store.getState();
+  const field  = useSelector(selectField)
 
-  return <FieldLayout field={state.field} onClickField={onClickField} />;
+  return <FieldLayout field={field} onClickField={onClickField} />;
 };
 
 Field.propTypes = {

@@ -1,33 +1,34 @@
 import { GameLayout } from "./GameLayout";
 import { Information } from "../Information/Information";
 import { Field } from "../Field/Field.jsx";
-import { useState, useEffect } from "react";
 import { store } from "../../redux/store";
+import {useSelector, useDispatch} from 'react-redux';
+import { selectField, selectCurrentPlayer, selectIsGameEnded } from "../../selectors"
+
 
 export const Game = () => {
-  const [, forcedUpdate] = useState(0);
+  const dispatch = useDispatch();
 
-  useEffect(() => {
-    const unsubscribe = store.subscribe(() => forcedUpdate((i) => i + 1));
-    return () => unsubscribe();
-  }, []);
+  const field = useSelector(selectField);
+  const currentPlayer = useSelector(selectCurrentPlayer);
+  const isGameEnded = useSelector(selectIsGameEnded);
 
-  const state = store.getState();
 
+  
   const onClickField = (i) => {
-    if (state.field[i] === "" && !state.isGameEnded) {
-      const newField = [...state.field];
-      newField[i] = state.currentPlayer;
+    if (field[i] === "" && !isGameEnded) {
+      const newField = [...field];
+      newField[i] = currentPlayer;
       store.dispatch({ type: "SET_FIELD", payload: newField });
 
       if (calculateWinner(newField)) {
-        store.dispatch({ type: "SET_GAME_ENDED", payload: true });
+        dispatch({ type: "SET_GAME_ENDED", payload: true });
       } else if (newField.every((i) => i !== "")) {
-        store.dispatch({ type: "SET_DRAW", payload: true });
+        dispatch({ type: "SET_DRAW", payload: true });
       } else {
-        store.dispatch({
+        dispatch({
           type: "SET_CURRENT_PLAYER",
-          payload: state.currentPlayer === "X" ? "O" : "X",
+          payload: currentPlayer === "X" ? "O" : "X",
         });
       }
     }
@@ -54,7 +55,7 @@ export const Game = () => {
   };
 
   const onClear = () => {
-    store.dispatch({ type: "RESTART_GAME" });
+    dispatch({ type: "RESTART_GAME" });
   };
 
   return (
